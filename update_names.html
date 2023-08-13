@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js coal">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>update names - Ordinal Namespaces Handbook</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "coal" : "coal";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('coal')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item expanded "><a href="ANS_Spec.html"><strong aria-hidden="true">2.</strong> ANS Spec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Mint_names.html"><strong aria-hidden="true">2.1.</strong> Mint names</a></li><li class="chapter-item expanded "><a href="update_names.html" class="active"><strong aria-hidden="true">2.2.</strong> update names</a></li></ol></li><li class="chapter-item expanded "><a href="faq.html"><strong aria-hidden="true">3.</strong> FAQ</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Ordinal Namespaces Handbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ord-run/ord" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="all-name-system-ans-documentation"><a class="header" href="#all-name-system-ans-documentation">All Name System (ANS) Documentation</a></h1>
+<h2 id="updating-names-in-the-all-name-system-ans"><a class="header" href="#updating-names-in-the-all-name-system-ans">Updating Names in the All Name System (ANS)</a></h2>
+<p>To update an existing name within the All Name System, inscribe an ordinal with the updated details for your domain. Below is the format and description of each field:</p>
+<h3 id="example-update-format"><a class="header" href="#example-update-format"><a href="https://ordinals.com/inscription/a74a6737e957dd7e96b2af6f998154fea73ced69ddefec632c557da4cdcc742ai0">Example Update Format</a></a></h3>
+<pre><code class="language-json">{
+    &quot;p&quot;: &quot;ans&quot;,
+    &quot;op&quot;: &quot;update&quot;,
+    &quot;ns&quot;: &quot;all&quot;,
+    &quot;name&quot;: &quot;test.all&quot;,
+    &quot;eth&quot;: &quot;0x11111111111111111111111111111111&quot;,
+    &quot;arb&quot;: &quot;0x22222222222222222222222222222222&quot;,
+    &quot;trx&quot;: &quot;0x33333333333333333333333333333333&quot;,
+    &quot;sol&quot;: &quot;0x44444444444444444444444444444444&quot;,
+    &quot;url&quot;: &quot;https://ord.run&quot;,
+    &quot;ip&quot;: &quot;1.1.1.1&quot;,
+    &quot;tw&quot;: &quot;https://x.com/ord_run&quot;,
+    &quot;tg&quot;: &quot;https://t.me/OKXOfficial_English&quot;,
+    &quot;about&quot;: &quot;Names on Bitcoin. First is first.&quot;,
+    &quot;relay&quot;: &quot;26482871f33f1051f450f2da9af275794c0b5f1c61ebf35e4467fb42c2813403i0&quot;
+}
+</code></pre>
+<h3 id="field-descriptions"><a class="header" href="#field-descriptions">Field Descriptions</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>p</code></td><td>Protocol identifier. For ANS, this should always be &quot;ans&quot;.</td></tr>
+<tr><td><code>op</code></td><td>Operation type. For updates, this should be &quot;update&quot;.</td></tr>
+<tr><td><code>ns</code></td><td>Namespace. For the main ANS system, this is &quot;all&quot;.</td></tr>
+<tr><td><code>name</code></td><td>The full domain name you wish to update, including the namespace suffix (e.g., &quot;test.all&quot;).</td></tr>
+<tr><td><code>...</code></td><td>Additional fields can be added as needed. These can include predefined fields like &quot;eth&quot;, &quot;url&quot;, etc., or custom subdomains defined by the user.</td></tr>
+</tbody></table>
+</div>
+<h2 id="using-the-ans-website-for-domain-resolutions"><a class="header" href="#using-the-ans-website-for-domain-resolutions">Using the ANS Website for Domain Resolutions</a></h2>
+<p>The All Name System (ANS) website offers a user-friendly interface to resolve domain names and retrieve associated details. Here's a step-by-step guide on how to use the website for domain resolutions:</p>
+<h3 id="basic-domain-resolution"><a class="header" href="#basic-domain-resolution">Basic Domain Resolution</a></h3>
+<ol>
+<li><strong>Navigate to the ANS Website</strong>: Open your web browser and go to <code>https://ord.run/</code>.</li>
+<li><strong>Enter the Domain Name</strong>: In the address bar, after the <code>/</code>, type the domain name you wish to resolve. For instance, if you want to resolve the domain &quot;test&quot;, you would enter <code>https://ord.run/test</code>.</li>
+</ol>
+<h3 id="resolving-subdomains"><a class="header" href="#resolving-subdomains">Resolving Subdomains</a></h3>
+<p>If the domain has associated subdomains, you can retrieve specific details by appending the subdomain after the domain name:</p>
+<ol>
+<li><strong>Navigate to the ANS Website</strong>: Open your web browser and go to <code>https://ord.run/</code>.</li>
+<li><strong>Enter the Domain and Subdomain</strong>: In the address bar, after the <code>/</code>, type the domain name followed by another <code>/</code> and then the subdomain. For example, to retrieve the Twitter link for the domain &quot;test&quot;, you would enter <code>https://ord.run/test/tw</code>.</li>
+</ol>
+<h3 id="what-to-expect"><a class="header" href="#what-to-expect">What to Expect</a></h3>
+<ul>
+<li><strong>No Subdomain or Invalid Subdomain</strong>: If you don't specify a subdomain or if the subdomain you entered isn't recognized, the website will display the Bitcoin address of the domain owner.</li>
+<li><strong>URL Type Subdomain</strong>: If the subdomain corresponds to a URL, the website will automatically redirect you to that URL. For instance, <code>https://ord.run/test/tw</code> might redirect you to a Twitter page.</li>
+<li><strong>Non-URL Type Subdomain</strong>: If the subdomain isn't a URL, the website will show the content associated with that subdomain. For example, <code>https://ord.run/test/eth</code> might display a specific Ethereum address.</li>
+</ul>
+<p>Remember, the ANS system is designed to be intuitive and user-friendly. Even if you're not tech-savvy, you can easily navigate and retrieve information using the steps above.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="Mint_names.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="faq.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="Mint_names.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="faq.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

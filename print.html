@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js coal">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Ordinal Namespaces Handbook</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "coal" : "coal";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('coal')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item expanded "><a href="ANS_Spec.html"><strong aria-hidden="true">2.</strong> ANS Spec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Mint_names.html"><strong aria-hidden="true">2.1.</strong> Mint names</a></li><li class="chapter-item expanded "><a href="update_names.html"><strong aria-hidden="true">2.2.</strong> update names</a></li></ol></li><li class="chapter-item expanded "><a href="faq.html"><strong aria-hidden="true">3.</strong> FAQ</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Ordinal Namespaces Handbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/ord-run/ord" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<h1 id="all-name-system-ans"><a class="header" href="#all-name-system-ans">All Name System (ANS)</a></h1>
+<h2 id="a-decentralized-domain-system-built-on-ordinal-theory"><a class="header" href="#a-decentralized-domain-system-built-on-ordinal-theory">A Decentralized Domain System Built on Ordinal Theory</a></h2>
+<h3 id="what-is-ans"><a class="header" href="#what-is-ans">What is ANS?</a></h3>
+<p>The All Name System, or ANS, represents a groundbreaking decentralized domain system, constructed atop the Ordinal Theory protocol on the Bitcoin blockchain.</p>
+<h3 id="the-significance-of-all"><a class="header" href="#the-significance-of-all">The Significance of &quot;All&quot;</a></h3>
+<p>In ANS, the term “All” is more than just a word. It embodies our core philosophy and commitment: to provide decentralized domain resolutions for everything. Be it Bitcoin wallet addresses, social media links, or any other digital identity, ANS is dedicated to offering a straightforward, distinct, and decentralized naming solution.</p>
+<h3 id="why-the-all-suffix"><a class="header" href="#why-the-all-suffix">Why the &quot;.all&quot; Suffix?</a></h3>
+<p>&quot;.all&quot; is not just a domain suffix. It stands as the hallmark of the ANS system, symbolizing our vision: to forge an open, inclusive, and boundless digital realm. Within this realm, everyone can effortlessly create and manage domain names for their digital assets and identities, devoid of intermediaries or intricate procedures.</p>
+<h3 id="the-edge-of-ans"><a class="header" href="#the-edge-of-ans">The Edge of ANS</a></h3>
+<p>Merging the decentralization, security, and immutability of Bitcoin, ANS presents users with a domain resolution tool that's both simple and potent. It not only aids users in managing and sharing their digital assets with ease but also provides developers with a robust and reliable foundation for building the next generation of decentralized applications.</p>
+<p>For more details on ordinal theory, see the <a href="overview.html">overview</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="overview-of-the-all-name-system-ans"><a class="header" href="#overview-of-the-all-name-system-ans">Overview of the All Name System (ANS)</a></h1>
+<h2 id="system-architecture"><a class="header" href="#system-architecture">System Architecture</a></h2>
+<ul>
+<li><strong>Built on Bitcoin</strong>: ANS leverages the decentralization, security, and immutability of Bitcoin to offer a robust domain system.</li>
+<li><strong>Integration with Ordinal Theory</strong>: Through the Ordinal Theory protocol, ANS assigns unique domain names to each Bitcoin wallet address.</li>
+</ul>
+<h2 id="core-features"><a class="header" href="#core-features">Core Features</a></h2>
+<ul>
+<li><strong>Decentralized Domain Registration</strong>: Users can easily register a &quot;.all&quot; domain name for their Bitcoin wallet addresses.</li>
+<li><strong>Subdomain Resolutions</strong>: ANS supports subdomain resolutions, allowing users to add multiple subdomains to their primary domain.</li>
+<li><strong>Multi-chain Support</strong>: Beyond Bitcoin addresses, ANS also facilitates resolutions for other blockchain addresses like ETH, ARB, TRX, and more.</li>
+<li><strong>Social Media Links</strong>: Users can associate social media links, such as Twitter or Telegram, with their domain names.</li>
+</ul>
+<h2 id="how-it-works"><a class="header" href="#how-it-works">How It Works</a></h2>
+<ul>
+<li><strong>Domain Minting</strong>: Users register or update domain names by minting a new inscription.</li>
+<li><strong>Decentralized Resolutions</strong>: All domain resolution requests are conducted directly on the Bitcoin blockchain, ensuring authenticity and tamper-resistance.</li>
+<li><strong>Centralized Interface</strong>: While data storage is decentralized, ANS offers a centralized resolution website, simplifying domain querying and resolution.</li>
+</ul>
+<h2 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h2>
+<ul>
+<li><strong>Simplified Transactions</strong>: Users can conduct Bitcoin transactions using easy-to-remember domain names instead of complex wallet addresses.</li>
+<li><strong>Decentralized Identity</strong>: ANS can serve as a decentralized identity system, allowing users to craft unique domain names for their digital identities.</li>
+<li><strong>Digital Asset Management</strong>: Developers can utilize ANS to create distinct domain names for decentralized applications, such as DApps and NFTs.</li>
+</ul>
+<h2 id="advantages-of-ans"><a class="header" href="#advantages-of-ans">Advantages of ANS</a></h2>
+<ul>
+<li><strong>Security</strong>: With all data stored on the Bitcoin blockchain, ANS delivers a secure and immutable domain system.</li>
+<li><strong>Flexibility</strong>: ANS's design lets users effortlessly add, modify, or delete domain information.</li>
+<li><strong>Openness</strong>: As an open system, ANS encourages community involvement and innovation.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><p>Examples of Registration and Update Inscriptions
+The domain registration and resolution approach in ANS is inspired by the &quot;sats names&quot; domain system. Here, we provide sample formats to help users understand how to craft inscriptions for domain registration and updates.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="ans-namespace-syntax"><a class="header" href="#ans-namespace-syntax">ANS Namespace Syntax</a></h2>
+<p>The syntax below applies to all ANS namespaces, for example <code>.all</code>, plus all future namespaces. </p>
+<p>New names can be minted (inscribed for the first time) as ordinals with only a Bitcoin transaction. This process is open to anyone that can inscribe. </p>
+<h3 id="registering-names"><a class="header" href="#registering-names">Registering Names</a></h3>
+<h4 id="simple-registration"><a class="header" href="#simple-registration">Simple Registration</a></h4>
+<p>To register a new name within the All Name System, simply inscribe an ordinal containing your desired name. Here's an <a href="https://ordinals.com/inscription/b041f1a76bc77778438bc2dc934a719c2c138948ca6b459c58f2a1c16dc7c6abi0">example</a>:</p>
+<pre><code>test.all
+</code></pre>
+<p>⚠️ <strong>Registration Limitations</strong></p>
+<p>These rules apply to all namespaces and names:</p>
+<ul>
+<li>Only the first instance of each name/namespace is valid.</li>
+<li>Only one name operation per ordinal inscription.</li>
+<li>Any UTF-8 character is valid.</li>
+<li>Capitalization does not matter. All names/namespaces will be indexed as lowercase.</li>
+<li>No spaces are permitted within a name.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="all-name-system-ans-documentation"><a class="header" href="#all-name-system-ans-documentation">All Name System (ANS) Documentation</a></h1>
+<h2 id="updating-names-in-the-all-name-system-ans"><a class="header" href="#updating-names-in-the-all-name-system-ans">Updating Names in the All Name System (ANS)</a></h2>
+<p>To update an existing name within the All Name System, inscribe an ordinal with the updated details for your domain. Below is the format and description of each field:</p>
+<h3 id="example-update-format"><a class="header" href="#example-update-format"><a href="https://ordinals.com/inscription/a74a6737e957dd7e96b2af6f998154fea73ced69ddefec632c557da4cdcc742ai0">Example Update Format</a></a></h3>
+<pre><code class="language-json">{
+    &quot;p&quot;: &quot;ans&quot;,
+    &quot;op&quot;: &quot;update&quot;,
+    &quot;ns&quot;: &quot;all&quot;,
+    &quot;name&quot;: &quot;test.all&quot;,
+    &quot;eth&quot;: &quot;0x11111111111111111111111111111111&quot;,
+    &quot;arb&quot;: &quot;0x22222222222222222222222222222222&quot;,
+    &quot;trx&quot;: &quot;0x33333333333333333333333333333333&quot;,
+    &quot;sol&quot;: &quot;0x44444444444444444444444444444444&quot;,
+    &quot;url&quot;: &quot;https://ord.run&quot;,
+    &quot;ip&quot;: &quot;1.1.1.1&quot;,
+    &quot;tw&quot;: &quot;https://x.com/ord_run&quot;,
+    &quot;tg&quot;: &quot;https://t.me/OKXOfficial_English&quot;,
+    &quot;about&quot;: &quot;Names on Bitcoin. First is first.&quot;,
+    &quot;relay&quot;: &quot;26482871f33f1051f450f2da9af275794c0b5f1c61ebf35e4467fb42c2813403i0&quot;
+}
+</code></pre>
+<h3 id="field-descriptions"><a class="header" href="#field-descriptions">Field Descriptions</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>p</code></td><td>Protocol identifier. For ANS, this should always be &quot;ans&quot;.</td></tr>
+<tr><td><code>op</code></td><td>Operation type. For updates, this should be &quot;update&quot;.</td></tr>
+<tr><td><code>ns</code></td><td>Namespace. For the main ANS system, this is &quot;all&quot;.</td></tr>
+<tr><td><code>name</code></td><td>The full domain name you wish to update, including the namespace suffix (e.g., &quot;test.all&quot;).</td></tr>
+<tr><td><code>...</code></td><td>Additional fields can be added as needed. These can include predefined fields like &quot;eth&quot;, &quot;url&quot;, etc., or custom subdomains defined by the user.</td></tr>
+</tbody></table>
+</div>
+<h2 id="using-the-ans-website-for-domain-resolutions"><a class="header" href="#using-the-ans-website-for-domain-resolutions">Using the ANS Website for Domain Resolutions</a></h2>
+<p>The All Name System (ANS) website offers a user-friendly interface to resolve domain names and retrieve associated details. Here's a step-by-step guide on how to use the website for domain resolutions:</p>
+<h3 id="basic-domain-resolution"><a class="header" href="#basic-domain-resolution">Basic Domain Resolution</a></h3>
+<ol>
+<li><strong>Navigate to the ANS Website</strong>: Open your web browser and go to <code>https://ord.run/</code>.</li>
+<li><strong>Enter the Domain Name</strong>: In the address bar, after the <code>/</code>, type the domain name you wish to resolve. For instance, if you want to resolve the domain &quot;test&quot;, you would enter <code>https://ord.run/test</code>.</li>
+</ol>
+<h3 id="resolving-subdomains"><a class="header" href="#resolving-subdomains">Resolving Subdomains</a></h3>
+<p>If the domain has associated subdomains, you can retrieve specific details by appending the subdomain after the domain name:</p>
+<ol>
+<li><strong>Navigate to the ANS Website</strong>: Open your web browser and go to <code>https://ord.run/</code>.</li>
+<li><strong>Enter the Domain and Subdomain</strong>: In the address bar, after the <code>/</code>, type the domain name followed by another <code>/</code> and then the subdomain. For example, to retrieve the Twitter link for the domain &quot;test&quot;, you would enter <code>https://ord.run/test/tw</code>.</li>
+</ol>
+<h3 id="what-to-expect"><a class="header" href="#what-to-expect">What to Expect</a></h3>
+<ul>
+<li><strong>No Subdomain or Invalid Subdomain</strong>: If you don't specify a subdomain or if the subdomain you entered isn't recognized, the website will display the Bitcoin address of the domain owner.</li>
+<li><strong>URL Type Subdomain</strong>: If the subdomain corresponds to a URL, the website will automatically redirect you to that URL. For instance, <code>https://ord.run/test/tw</code> might redirect you to a Twitter page.</li>
+<li><strong>Non-URL Type Subdomain</strong>: If the subdomain isn't a URL, the website will show the content associated with that subdomain. For example, <code>https://ord.run/test/eth</code> might display a specific Ethereum address.</li>
+</ul>
+<p>Remember, the ANS system is designed to be intuitive and user-friendly. Even if you're not tech-savvy, you can easily navigate and retrieve information using the steps above.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="frequently-asked-questions-faq"><a class="header" href="#frequently-asked-questions-faq">Frequently Asked Questions (FAQ)</a></h2>
+<h3 id="how-does-ans-ensure-the-authenticity-of-domain-updates"><a class="header" href="#how-does-ans-ensure-the-authenticity-of-domain-updates">How does ANS ensure the authenticity of domain updates?</a></h3>
+<p>In the ANS system, while anyone can mint an update inscription, there's a mechanism in place to ensure that only the legitimate owner of a domain can authorize and apply these updates.</p>
+<p>When an update inscription is minted and sent to the domain owner's wallet, it's essential for the domain owner to then send this inscription to their own address. This creates a transaction where both the input and output addresses are the same, indicating the owner's acknowledgment and acceptance of the update.</p>
+<p>During resolution, ANS checks two things:</p>
+<ol>
+<li>Whether the <code>address_to</code> of the inscription is the domain owner's address, ensuring the inscription is currently in the rightful owner's wallet.</li>
+<li>Whether the <code>address_from</code> is also the domain owner's address, confirming that the owner has authorized the update by sending it to themselves.</li>
+</ol>
+<p>This self-verification mechanism ensures that only the true owner of a domain can update its resolution content, preventing unauthorized or malicious changes.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
